@@ -6,20 +6,22 @@
 //  Copyright (c) 2013 C0deH4cker. All rights reserved.
 //
 
-#pragma once
+#ifndef _BALLZ_MYGAME_H_
+#define _BALLZ_MYGAME_H_
 
 #include <vector>
-#include "Game.h"
+#include <random>
+#include <Game.h>
+#include <Vector2.h>
+#include <Content.h>
+#include <Texture2D.h>
+#include <Rectangle.h>
 #include "Ball.h"
-#include "Vector2.h"
-#include "Content.h"
-#include "Texture2D.h"
-#include "Rectangle.h"
 
 
 using namespace sge;
 
-class MyGame : public Game {
+class MyGame : public virtual Game {
 public:
 	MyGame();
 	~MyGame();
@@ -40,5 +42,7 @@ private:
 	Texture2D* ballImg;
 	Rectangle cursorRect;
 	std::vector<Ball*> balls;
+	std::mt19937 rng;
 };
 
+#endif /* _BALLZ_MYGAME_H_ */

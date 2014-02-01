@@ -8,17 +8,17 @@
 
 #include "Ball.h"
 #include <OpenGL/gl.h>
-#include <cmath>
-#include "helpers.h"
-#include "Vector2.h"
-#include "Color.h"
-#include "Game.h"
-#include "Window.h"
+#include <math.h>
+#include <helpers.h>
+#include <Vector2.h>
+#include <Color.h>
+#include <Game.h>
+#include <Window.h>
 
 
 using namespace sge;
 
-const float Ball::Restitution = 1.0f;
+const float Ball::restitution = 1.0f;
 
 Ball::Ball(Vector2 start, float radius, Color* color, float gravity)
 : center(start), radius(radius), color(color), texture(NULL), gravity(gravity), hasTexture(false) {
@@ -43,25 +43,27 @@ void Ball::update(float deltaTime) {
 	velocity.y += 0.5f * gravity;
 	center += velocity * deltaTime;
 	
-	unsigned w = Game::instance().window->getWidth();
-	unsigned h = Game::instance().window->getHeight();
+	Window* window = Game::instance()->window;
+	
+	unsigned w = window->getWidth();
+	unsigned h = window->getHeight();
 	
 	if(center.x + radius >= w) {
 		center.x = w - radius;
-		velocity.x *= -Restitution;
+		velocity.x *= -restitution;
 	}
 	else if(center.x - radius <= 0) {
 		center.x = radius;
-		velocity.x *= -Restitution;
+		velocity.x *= -restitution;
 	}
 	
 	if(center.y + radius >= h) {
 		center.y = h - radius;
-		velocity.y *= -Restitution;
+		velocity.y *= -restitution;
 	}
 	else if(center.y - radius <= 0) {
 		center.y = radius;
-		velocity.y *= -Restitution;
+		velocity.y *= -restitution;
 	}
 	
 	velocity.y += 0.5f * gravity;
@@ -157,7 +159,7 @@ void Ball::handleCollision(Ball* other) {
 	velocity.y -= a * m21 * dvx2;
 	
 	// Velocity correction for inelastic collisions
-	velocity = (velocity - vcm) * Restitution + vcm;
-	other->velocity = (other->velocity - vcm) * Restitution + vcm;
+	velocity = (velocity - vcm) * restitution + vcm;
+	other->velocity = (other->velocity - vcm) * restitution + vcm;
 }
 

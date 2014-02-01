@@ -6,13 +6,14 @@
 //  Copyright (c) 2013 C0deH4cker. All rights reserved.
 //
 
-#pragma once
+#ifndef _BALLZ_BALL_H_
+#define _BALLZ_BALL_H_
 
 #include <vector>
 #include <OpenGL/gl.h>
-#include "Vector2.h"
-#include "Color.h"
-#include "Texture2D.h"
+#include <Vector2.h>
+#include <Color.h>
+#include <Texture2D.h>
 
 
 using namespace sge;
@@ -42,8 +43,10 @@ public:
 	void handleCollision(Ball* other);
 	
 private:
+	static const float restitution;
+	
 	GLuint vertexBuffer;
 	std::vector<Vector2> vertices;
-	static const float Restitution;
 };
 
+#endif /* _BALLZ_BALL_H_ */
